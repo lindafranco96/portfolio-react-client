@@ -29,4 +29,4 @@ Here are frontend challenges to learn more and improve knowledge of technologies
 ## Author
 
 - Website - [Linda Franco](https://lindafranco.netlify.app/)
-- Frontend Mentor - [@LindaHyuk](https://www.frontendmentor.io/profile/LindaHyuk)
+- Frontend Mentor - [@LindaHyuk](https://www.frontendmentor.io/profile/lindafranco96)
