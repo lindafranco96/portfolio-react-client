@@ -1,38 +1,32 @@
 import React, { useState } from 'react';
 
 function Contact() {
-  // 1. Estados para guardar lo que escribe el usuario
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [mensaje, setMensaje] = useState("");
-  
-  // Estado para saber si se envió o hubo error
-  const [status, setStatus] = useState(null); // null, "exito", "error"
+  const [status, setStatus] = useState(null);
 
-  // 2. La función que dispara el envío
   const enviarMensaje = (evento) => {
-    evento.preventDefault(); // Evita que la página se recargue sola
+    evento.preventDefault();
 
-    // Empaquetamos los datos en un objeto (igual que tu clase Java)
     const datosAEnviar = {
       nombre: nombre,
       email: email,
       texto: mensaje
     };
 
-    // 3. La Petición POST (El envío real)
     //fetch('http://localhost:8080/api/contacto', {
-    fetch('https://api-portfolio-linda.onrender.com/api/contacto', {
-      method: 'POST', // <--- ¡Aquí cambia la cosa!
+    const url = `${process.env.REACT_APP_API_URL}/api/contacto`;
+    fetch(url, {
+      method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // "Oye Java, te envío JSON"
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify(datosAEnviar) // Convertimos el objeto a texto JSON
+      body: JSON.stringify(datosAEnviar)
     })
     .then(response => {
       if (response.ok) {
         setStatus("exito");
-        // Limpiamos el formulario
         setNombre("");
         setEmail("");
         setMensaje("");

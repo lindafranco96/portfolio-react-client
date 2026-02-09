@@ -2,17 +2,17 @@ import React, { useState, useEffect } from 'react';
 import Contact from './components/Contact';
 
 function App() {
-  // 1. Inicializamos como un Arreglo vacío [] (Lista vacía)
   const [proyectos, setProyectos] = useState([]);
 
   useEffect(() => {
-    // 2. Llamamos al endpoint nuevo (Plural)
     //fetch('http://localhost:8080/api/proyectos')
-    fetch('https://api-portfolio-linda.onrender.com/api/proyectos')
+    //fetch('https://api-portfolio-linda.onrender.com/api/proyectos')
+    const url = `${process.env.REACT_APP_API_URL}/api/proyectos`;
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         console.log("Lista recibida:", data);
-        setProyectos(data); // Guardamos la lista completa
+        setProyectos(data);
       })
       .catch(error => console.error("Error:", error));
   }, []);
@@ -24,8 +24,6 @@ function App() {
 
       <div style={{ display: 'flex', justifyContent: 'center', gap: '20px', flexWrap: 'wrap' }}>
         
-        {/* 3. EL LOOP DE REACT (.map) */}
-        {/* "Para cada 'p' (proyecto) en la lista 'proyectos', dibuja esto..." */}
         {proyectos.map((p) => (
           
           <div key={p.id} style={{ 
@@ -44,7 +42,6 @@ function App() {
 
         ))}
 
-        {/* --- AQUÍ VA EL FORMULARIO --- */}
         <Contact />
 
       </div>
