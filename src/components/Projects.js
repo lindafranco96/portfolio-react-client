@@ -1,38 +1,67 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import ContainerTitle from '../assets/styles/Title'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLink } from '@fortawesome/free-solid-svg-icons'
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons'
-import Todo_List_App from './../assets/img/Todo-List-App.PNG'
 import theme from './../theme'
 
 const Projects = () => {
+    // 1. LÓGICA DINÁMICA
+    const [proyectos, setProyectos] = useState([]);
+
+    useEffect(() => {
+        const url = `${process.env.REACT_APP_API_URL}/api/proyectos`;
+        
+        fetch(url)
+            .then(res => res.json())
+            .then(data => setProyectos(data))
+            .catch(err => console.error("Error cargando proyectos:", err));
+    }, []);
+
+    // 2. RENDERIZADO
     return (
         <ProjectsDiv>
             <ContainerTitle>
                 <h1>My Projects</h1>
                 <p>- recent works -</p>
             </ContainerTitle>
+            
             <ProjectsContainer>
-                <ProjectContent>
-                    <img src={Todo_List_App} alt="TodoList" />
-                    <div className="works__data">
-                        <div className="works__link-group">
-                            <a href="https://lindafranco96.github.io/React-todo-list/" target="_blank" rel="noreferrer" className="works__link"><FontAwesomeIcon icon={faLink} className="projects__icon" /></a>
-                            <a href="https://github.com/lindafranco96/React-todo-list" target="_blank" rel="noreferrer" className="works__link"><FontAwesomeIcon icon={faGithubSquare} className="projects__icon" /></a>
+                {proyectos.map((p) => (
+                    <ProjectContent key={p.id}>
+                        {/* IMAGEN DESDE BD */}
+                        <img src={p.urlImagen} alt={p.titulo} />
+                        
+                        <div className="works__data">
+                            <div className="works__link-group">
+                                {/* LINKS DESDE BD */}
+                                <a href={p.urlDespliegue} target="_blank" rel="noreferrer" className="works__link">
+                                    <FontAwesomeIcon icon={faLink} className="projects__icon" />
+                                </a>
+                                <a href={p.urlRepositorio} target="_blank" rel="noreferrer" className="works__link">
+                                    <FontAwesomeIcon icon={faGithubSquare} className="projects__icon" />
+                                </a>
+                            </div>
+                            
+                            {/* TEXTOS DESDE BD */}
+                            <span className="works__title">{p.titulo}</span>
+                            
+                            <span className="works__description">
+                                {p.descripcion}
+                            </span>
+                            
+                            {/* ETIQUETAS DINÁMICAS */}
+                            <div className="works__description-makes">
+                                {p.tecnologias && 
+                                    p.tecnologias.split(',').map((tech, index) => (
+                                        <span key={index}>{tech.trim()}</span>
+                                    ))
+                                }
+                            </div>
                         </div>
-                        <span className="works__title">To-Do List</span>
-                        <span className="works__description">
-                            A todo list ready to add tasks to be done
-                        </span>
-                        <div className="works__description-makes">
-                            <span>React</span>
-                            <span>LocalStorage</span>
-                            <span>Hooks</span>
-                        </div>
-                    </div>
-                </ProjectContent>
+                    </ProjectContent>
+                ))}
             </ProjectsContainer>
         </ProjectsDiv>
     );
@@ -62,10 +91,13 @@ const ProjectContent = styled.div`
     border-radius: .8rem;
     position: relative;
     overflow: hidden;
+    heigth: 1100px;
 
     img {
         width: 100%;
         height: 100%;
+        object-fit: cover; 
+        object-position: top;
     }
 
     .works__data {
@@ -77,7 +109,7 @@ const ProjectContent = styled.div`
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background-color: rgba(185,59,109,.9);
+        background-color: rgba(185,59,109,.9); 
         border-radius: .5rem;
         transition: .3s;
     }
