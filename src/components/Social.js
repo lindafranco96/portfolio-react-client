@@ -25,7 +25,7 @@ const Social = (props) => {
                 </a>
             </SocialButton>
             <SocialButton white prop={prop}>
-                <a href="https://www.frontendmentor.io/profile/LindaHyuk" target="_blank">
+                <a href="https://www.frontendmentor.io/profile/LindaHyuk" target="_blank" rel="noreferrer" >
                     <img src={frontend} alt="Frontend Mentor" />
                 </a>
             </SocialButton>

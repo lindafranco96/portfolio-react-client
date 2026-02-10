@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import linda_logo from './../assets/img/linda_logo.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import ContainerTitle from './../assets/styles/Title'
 import theme from './../theme'
 
